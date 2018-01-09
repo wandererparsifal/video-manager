@@ -3,10 +3,10 @@
 </template>
 
 <script>
-  const { ipcRenderer } = require('electron');
+  import { ipcRenderer } from 'electron';
 
   export default {
-    name: 'landing-page',
+    name: 'main-page',
     methods: {
       click() {
         ipcRenderer.send('somemsg', 'data');
