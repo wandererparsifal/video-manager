@@ -2567,6 +2567,11 @@ function createWindow() {
   mainWindow.on('closed', function () {
     mainWindow = null;
   });
+
+  __WEBPACK_IMPORTED_MODULE_0_electron__["ipcMain"].on('somemsg', function (event, data) {
+    console.log(data);
+    event.sender.send('replaymsg', 'pong');
+  });
 }
 
 __WEBPACK_IMPORTED_MODULE_0_electron__["app"].on('ready', createWindow);
