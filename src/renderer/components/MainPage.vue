@@ -34,6 +34,13 @@
       ipcRenderer.on('replaymsg', (evt, otherData) => {
         console.log(otherData);
       });
+      this.$http.get('/api/test')
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   };
 </script>
