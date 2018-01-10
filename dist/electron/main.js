@@ -61,7 +61,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -107,7 +107,7 @@ try {
 } catch (er) {}
 
 var GLOBSTAR = minimatch.GLOBSTAR = Minimatch.GLOBSTAR = {}
-var expand = __webpack_require__(35)
+var expand = __webpack_require__(36)
 
 var plTypes = {
   '!': { open: '(?:(?!(?:', close: '))[^/]*?)'},
@@ -1067,7 +1067,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(25);
+exports.humanize = __webpack_require__(26);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -1320,18 +1320,18 @@ var fs = __webpack_require__(1)
 var rp = __webpack_require__(10)
 var minimatch = __webpack_require__(5)
 var Minimatch = minimatch.Minimatch
-var inherits = __webpack_require__(38)
-var EE = __webpack_require__(40).EventEmitter
+var inherits = __webpack_require__(39)
+var EE = __webpack_require__(41).EventEmitter
 var path = __webpack_require__(0)
 var assert = __webpack_require__(4)
 var isAbsolute = __webpack_require__(6)
-var globSync = __webpack_require__(41)
+var globSync = __webpack_require__(42)
 var common = __webpack_require__(11)
 var alphasort = common.alphasort
 var alphasorti = common.alphasorti
 var setopts = common.setopts
 var ownProp = common.ownProp
-var inflight = __webpack_require__(42)
+var inflight = __webpack_require__(43)
 var util = __webpack_require__(3)
 var childrenIgnored = common.childrenIgnored
 var isIgnored = common.isIgnored
@@ -2083,7 +2083,7 @@ var origRealpathSync = fs.realpathSync
 
 var version = process.version
 var ok = /^v[0-5]\./.test(version)
-var old = __webpack_require__(34)
+var old = __webpack_require__(35)
 
 function newError (er) {
   return er && er.syscall === 'realpath' && (
@@ -2495,7 +2495,7 @@ var _path = __webpack_require__(0);
 
 var _path2 = _interopRequireDefault(_path);
 
-var _https = __webpack_require__(47);
+var _https = __webpack_require__(48);
 
 var _https2 = _interopRequireDefault(_https);
 
@@ -2547,6 +2547,12 @@ var changePermissions = exports.changePermissions = function changePermissions(d
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function(__dirname) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_electron__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_electron___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_electron__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_express__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_express___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_express__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__test__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__test___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__test__);
+
+
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = __webpack_require__(0).join(__dirname, '/static').replace(/\\/g, '\\\\');
@@ -2587,27 +2593,59 @@ __WEBPACK_IMPORTED_MODULE_0_electron__["app"].on('activate', function () {
     createWindow();
   }
 });
+
+var expressApp = __WEBPACK_IMPORTED_MODULE_1_express___default()();
+expressApp.use('/api/test', __WEBPACK_IMPORTED_MODULE_2__test___default.a);
+
+expressApp.use(function (req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+expressApp.use(function (err, req, res) {
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+var server = expressApp.listen(0, function () {
+  global.sharedObject.port = server.address().port;
+  console.log('应用实例，Port %s', global.sharedObject.port);
+});
+
+global.sharedObject = {
+  port: ''
+};
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, "src/main"))
 
 /***/ }),
 /* 16 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-__webpack_require__(17);
-module.exports = __webpack_require__(15);
-
+module.exports = require("express");
 
 /***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(18);
+module.exports = __webpack_require__(15);
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
 
 process.env.NODE_ENV = 'development';
 
-__webpack_require__(18)({ showDevTools: true });
+__webpack_require__(19)({ showDevTools: true });
 
 __webpack_require__(2).app.on('ready', function () {
-  var installExtension = __webpack_require__(30);
+  var installExtension = __webpack_require__(31);
   installExtension.default(installExtension.VUEJS_DEVTOOLS).then(function () {}).catch(function (err) {
     console.log('Unable to install `vue-devtools`: \n', err);
   });
@@ -2616,14 +2654,14 @@ __webpack_require__(2).app.on('ready', function () {
 __webpack_require__(15);
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 const electron = __webpack_require__(2);
-const localShortcut = __webpack_require__(19);
-const isDev = __webpack_require__(29);
+const localShortcut = __webpack_require__(20);
+const isDev = __webpack_require__(30);
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -2720,16 +2758,16 @@ module.exports.openDevTools = openDevTools;
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 const {app, BrowserWindow} = __webpack_require__(2);
-const isAccelerator = __webpack_require__(20);
-const equals = __webpack_require__(21);
-const {toKeyEvent} = __webpack_require__(22);
-const _debug = __webpack_require__(23);
+const isAccelerator = __webpack_require__(21);
+const equals = __webpack_require__(22);
+const {toKeyEvent} = __webpack_require__(23);
+const _debug = __webpack_require__(24);
 
 const debug = _debug('electron-localshortcut');
 
@@ -3029,7 +3067,7 @@ module.exports = {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3057,7 +3095,7 @@ module.exports = function (str) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3103,7 +3141,7 @@ module.exports = areEqual;
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3374,7 +3412,7 @@ exports.toKeyEvent = toKeyEvent;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -3383,14 +3421,14 @@ exports.toKeyEvent = toKeyEvent;
  */
 
 if (typeof process !== 'undefined' && process.type === 'renderer') {
-  module.exports = __webpack_require__(24);
+  module.exports = __webpack_require__(25);
 } else {
-  module.exports = __webpack_require__(26);
+  module.exports = __webpack_require__(27);
 }
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -3581,7 +3619,7 @@ function localstorage() {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports) {
 
 /**
@@ -3739,14 +3777,14 @@ function plural(ms, n, name) {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
  * Module dependencies.
  */
 
-var tty = __webpack_require__(27);
+var tty = __webpack_require__(28);
 var util = __webpack_require__(3);
 
 /**
@@ -3934,7 +3972,7 @@ function createWritableStdioStream (fd) {
 
     case 'PIPE':
     case 'TCP':
-      var net = __webpack_require__(28);
+      var net = __webpack_require__(29);
       stream = new net.Socket({
         fd: fd,
         readable: false,
@@ -3993,19 +4031,19 @@ exports.enable(load());
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports = require("tty");
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = require("net");
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4017,7 +4055,7 @@ module.exports = isEnvSet ? getFromEnv : (process.defaultApp || /node_modules[\\
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4042,11 +4080,11 @@ var _path = __webpack_require__(0);
 
 var _path2 = _interopRequireDefault(_path);
 
-var _semver = __webpack_require__(31);
+var _semver = __webpack_require__(32);
 
 var _semver2 = _interopRequireDefault(_semver);
 
-var _downloadChromeExtension = __webpack_require__(32);
+var _downloadChromeExtension = __webpack_require__(33);
 
 var _downloadChromeExtension2 = _interopRequireDefault(_downloadChromeExtension);
 
@@ -4153,7 +4191,7 @@ var MOBX_DEVTOOLS = exports.MOBX_DEVTOOLS = {
 };
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports) {
 
 exports = module.exports = SemVer;
@@ -5455,7 +5493,7 @@ function intersects(r1, r2, loose) {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5473,11 +5511,11 @@ var _path = __webpack_require__(0);
 
 var _path2 = _interopRequireDefault(_path);
 
-var _rimraf = __webpack_require__(33);
+var _rimraf = __webpack_require__(34);
 
 var _rimraf2 = _interopRequireDefault(_rimraf);
 
-var _crossUnzip = __webpack_require__(43);
+var _crossUnzip = __webpack_require__(44);
 
 var _crossUnzip2 = _interopRequireDefault(_crossUnzip);
 
@@ -5526,7 +5564,7 @@ var downloadChromeExtension = function downloadChromeExtension(chromeStoreID, fo
 exports.default = downloadChromeExtension;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = rimraf
@@ -5896,7 +5934,7 @@ function rmkidsSync (p, options) {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -6205,11 +6243,11 @@ exports.realpath = function realpath(p, cache, cb) {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var concatMap = __webpack_require__(36);
-var balanced = __webpack_require__(37);
+var concatMap = __webpack_require__(37);
+var balanced = __webpack_require__(38);
 
 module.exports = expandTop;
 
@@ -6412,7 +6450,7 @@ function expand(str, isTop) {
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports) {
 
 module.exports = function (xs, fn) {
@@ -6431,7 +6469,7 @@ var isArray = Array.isArray || function (xs) {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6497,7 +6535,7 @@ function range(a, b, str) {
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 try {
@@ -6505,12 +6543,12 @@ try {
   if (typeof util.inherits !== 'function') throw '';
   module.exports = util.inherits;
 } catch (e) {
-  module.exports = __webpack_require__(39);
+  module.exports = __webpack_require__(40);
 }
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports) {
 
 if (typeof Object.create === 'function') {
@@ -6539,13 +6577,13 @@ if (typeof Object.create === 'function') {
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports) {
 
 module.exports = require("events");
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = globSync
@@ -7037,7 +7075,7 @@ GlobSync.prototype._makeAbs = function (f) {
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var wrappy = __webpack_require__(12)
@@ -7097,12 +7135,12 @@ function slice (args) {
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var spawn = __webpack_require__(44).spawn
+var spawn = __webpack_require__(45).spawn
 var slice = Array.prototype.slice
 
 var unzip = process.platform === 'win32' ? forWin32 : forUnix
@@ -7113,7 +7151,7 @@ module.exports = unzip
 
 // https://github.com/fritx/win-7zip
 function forWin32 (inPath, outPath, callback) {
-  var _7z = __webpack_require__(45)['7z']
+  var _7z = __webpack_require__(46)['7z']
 
   // very 奇葩
   // eg. 7z x archive.zip -oc:\Doc
@@ -7156,17 +7194,17 @@ function onceify (fn) {
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports) {
 
 module.exports = require("child_process");
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__dirname) {var resolve = __webpack_require__(0).resolve
-var bin = __webpack_require__(46).bin
+var bin = __webpack_require__(47).bin
 
 module.exports = map_obj(bin, function(v){
   return resolve(__dirname, v)
@@ -7182,16 +7220,29 @@ function map_obj(obj, fn){
 /* WEBPACK VAR INJECTION */}.call(exports, "node_modules/7zip"))
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports) {
 
 module.exports = {"_args":[["7zip@0.0.6","/home/yangming/Develop/Projects/Web/video-manager"]],"_development":true,"_from":"7zip@0.0.6","_id":"7zip@0.0.6","_inBundle":false,"_integrity":"sha1-nK+xca+CMpSQNTtIFvAzR6oVCjA=","_location":"/7zip","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"7zip@0.0.6","name":"7zip","escapedName":"7zip","rawSpec":"0.0.6","saveSpec":null,"fetchSpec":"0.0.6"},"_requiredBy":["/electron-devtools-installer"],"_resolved":"http://registry.npm.taobao.org/7zip/download/7zip-0.0.6.tgz","_spec":"0.0.6","_where":"/home/yangming/Develop/Projects/Web/video-manager","bin":{"7z":"7zip-lite/7z.exe"},"bugs":{"url":"https://github.com/fritx/win-7zip/issues"},"description":"7zip Windows Package via Node.js","homepage":"https://github.com/fritx/win-7zip#readme","keywords":["7z","7zip","7-zip","windows","install"],"license":"GNU LGPL","main":"index.js","name":"7zip","repository":{"type":"git","url":"git+ssh://git@github.com/fritx/win-7zip.git"},"scripts":{"test":"mocha"},"version":"0.0.6"}
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports) {
 
 module.exports = require("https");
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var express = __webpack_require__(16);
+var router = express.Router();
+
+router.get('/', function (req, res) {
+  res.send('respond with a resource');
+});
+
+module.exports = router;
 
 /***/ })
 /******/ ]);
