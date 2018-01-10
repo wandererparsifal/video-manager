@@ -1,6 +1,5 @@
-import {app, BrowserWindow, ipcMain} from 'electron' // eslint-disable-line
-import express from 'express'; // eslint-disable-line
-import test from './test'; // eslint-disable-line
+import { app, BrowserWindow, ipcMain } from 'electron' // eslint-disable-line
+const expressApp = require('../server/server');
 
 /**
  * Set `__static` path to static files in production
@@ -49,26 +48,6 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
-});
-
-const expressApp = express();
-expressApp.use('/api/test', test);
-
-expressApp.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
-// error handler
-expressApp.use((err, req, res) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
 });
 
 const server = expressApp.listen(0, () => {

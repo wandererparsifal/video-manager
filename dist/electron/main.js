@@ -2547,12 +2547,8 @@ var changePermissions = exports.changePermissions = function changePermissions(d
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function(__dirname) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_electron__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_electron___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_electron__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_express__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_express___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_express__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__test__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__test___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__test__);
 
-
+var expressApp = __webpack_require__(49);
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = __webpack_require__(0).join(__dirname, '/static').replace(/\\/g, '\\\\');
@@ -2592,23 +2588,6 @@ __WEBPACK_IMPORTED_MODULE_0_electron__["app"].on('activate', function () {
   if (mainWindow === null) {
     createWindow();
   }
-});
-
-var expressApp = __WEBPACK_IMPORTED_MODULE_1_express___default()();
-expressApp.use('/api/test', __WEBPACK_IMPORTED_MODULE_2__test___default.a);
-
-expressApp.use(function (req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
-expressApp.use(function (err, req, res) {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  res.status(err.status || 500);
-  res.render('error');
 });
 
 var server = expressApp.listen(0, function () {
@@ -7233,6 +7212,32 @@ module.exports = require("https");
 
 /***/ }),
 /* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var express = __webpack_require__(16);
+var test = __webpack_require__(50);
+
+var app = express();
+app.use('/api/test', test);
+
+app.use(function (req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+app.use(function (err, req, res) {
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+module.exports = app;
+
+/***/ }),
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var express = __webpack_require__(16);
