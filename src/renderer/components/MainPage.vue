@@ -31,6 +31,8 @@
       <el-main>
         <el-button plain @click="click">朴素按钮</el-button>
         {{msg}}
+        <p/>
+        <img :src='img'/>
       </el-main>
     </el-container>
   </el-container>
@@ -44,6 +46,7 @@
     data() {
       return {
         msg: '',
+        img: '',
       };
     },
     methods: {
@@ -58,6 +61,11 @@
       ipcRenderer.on('replaymsg', (evt, otherData) => {
         console.log(otherData);
         this.msg = otherData;
+      });
+      ipcRenderer.send('carousel');
+      ipcRenderer.on('replay_carousel', (evt, data) => {
+        console.log(data);
+        this.img = data;
       });
     },
   };
