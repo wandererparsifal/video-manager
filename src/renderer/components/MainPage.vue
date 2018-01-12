@@ -1,8 +1,8 @@
 <template>
   <el-container id="container_root">
-    <el-header>
-      head
-    </el-header>
+    <div id="div_header">
+      <carousel id="carousel"/>
+    </div>
     <el-container id="container_body">
       <el-aside>
         <el-menu
@@ -31,18 +31,19 @@
       <el-main>
         <el-button plain @click="click">朴素按钮</el-button>
         {{msg}}
-        <p/>
-        <img :src='img'/>
+        <img src="../assets/logo.png"/>
       </el-main>
     </el-container>
   </el-container>
 </template>
 
 <script>
-  import { ipcRenderer, remote } from 'electron'; // eslint-disable-line
+  import { ipcRenderer } from 'electron'; // eslint-disable-line
+  import Carousel from './Carousel';
 
   export default {
     name: 'main-page',
+    components: { Carousel },
     data() {
       return {
         msg: '',
@@ -62,11 +63,6 @@
         console.log(otherData);
         this.msg = otherData;
       });
-      ipcRenderer.send('carousel');
-      ipcRenderer.on('replay_carousel', (evt, data) => {
-        console.log(data);
-        this.img = data;
-      });
     },
   };
 </script>
@@ -79,7 +75,7 @@
     width: 100vw;
   }
 
-  .el-header {
+  #div_header {
     background-color: #f56c6c;
     color: #333;
     flex: 1;
