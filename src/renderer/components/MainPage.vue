@@ -30,7 +30,7 @@
       </el-aside>
       <el-main>
         <el-button plain @click="click">朴素按钮</el-button>
-        {{port}}
+        {{msg}}
       </el-main>
     </el-container>
   </el-container>
@@ -43,7 +43,7 @@
     name: 'main-page',
     data() {
       return {
-        port: '',
+        msg: '',
       };
     },
     methods: {
@@ -55,17 +55,10 @@
       },
     },
     created() {
-      this.port = remote.getGlobal('sharedObject').port;
       ipcRenderer.on('replaymsg', (evt, otherData) => {
         console.log(otherData);
+        this.msg = otherData;
       });
-      this.$http.get('/api/test')
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
   };
 </script>

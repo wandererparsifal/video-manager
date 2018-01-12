@@ -1,5 +1,7 @@
-import { app, BrowserWindow, ipcMain } from 'electron' // eslint-disable-line
-const expressApp = require('../server/server');
+import { app, BrowserWindow } from 'electron'; // eslint-disable-line
+const Service = require('../server/server'); // eslint-disable-line
+
+Service.start();
 
 /**
  * Set `__static` path to static files in production
@@ -29,11 +31,6 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
-
-  ipcMain.on('somemsg', (event, data) => {
-    console.log(data);
-    event.sender.send('replaymsg', 'pong');
-  });
 }
 
 app.on('ready', createWindow);
@@ -49,15 +46,6 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-const server = expressApp.listen(0, () => {
-  global.sharedObject.port = server.address().port;
-  console.log('应用实例，Port %s', global.sharedObject.port);
-});
-
-global.sharedObject = {
-  port: '',
-};
 
 /**
  * Auto Updater
