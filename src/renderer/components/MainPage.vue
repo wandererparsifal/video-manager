@@ -29,40 +29,28 @@
         </el-menu>
       </el-aside>
       <el-main>
-        <el-button plain @click="click">朴素按钮</el-button>
-        {{msg}}
-        <img src="../assets/logo.png"/>
+        <grids/>
       </el-main>
     </el-container>
   </el-container>
 </template>
 
 <script>
-  import { ipcRenderer } from 'electron'; // eslint-disable-line
   import Carousel from './Carousel';
+  import Grids from './Grids';
 
   export default {
     name: 'main-page',
-    components: { Carousel },
+    components: { Carousel, Grids },
     data() {
-      return {
-        msg: '',
-        img: '',
-      };
+      return {};
     },
     methods: {
-      click() {
-        ipcRenderer.send('somemsg', 'data');
-      },
       menu_select(index) {
         console.log(index);
       },
     },
     created() {
-      ipcRenderer.on('replaymsg', (evt, otherData) => {
-        console.log(otherData);
-        this.msg = otherData;
-      });
     },
   };
 </script>
