@@ -34,9 +34,7 @@
     array.push(((index % colNum) * 2) + 1);
     array.push(((index % colNum) * 2) + 2);
     array.push((parseInt(index / colNum, 10) * 2) + 1);
-    console.log((parseInt(index / colNum, 10) * 2) + 1);
     array.push((parseInt(index / colNum, 10) * 2) + 2);
-    console.log((parseInt(index / colNum, 10) * 2) + 2);
     return array;
   }
 
@@ -58,18 +56,22 @@
         console.log(otherData);
         this.msg = otherData;
       });
-
-      for (let i = 0; i < 12; i += 1) {
-        const array = getColRow(i, 4);
-        this.items.push(createStyle('#404', array[0], array[1], array[2], array[3], '../../static/556062.jpg'));
-      }
+      ipcRenderer.send('videos', 0, 11);
+      let images = [];
+      ipcRenderer.on('replayVideos', (evt, items) => {
+        console.log(items);
+        images = items;
+        for (let i = 0; i < 12; i += 1) {
+          const array = getColRow(i, 4);
+          this.items.push(createStyle('#404', array[0], array[1], array[2], array[3], images[i]));
+        }
+      });
     },
   };
 </script>
 
 <style>
   .wrapper {
-    background-color: #f0f9eb;
     display: grid;
     padding: 1vw;
     grid-template-columns: 20vw 1vw 20vw 1vw 20vw 1vw 20vw;
