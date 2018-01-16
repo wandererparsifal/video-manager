@@ -77,11 +77,12 @@
 
   .el-aside {
     background-color: #ACFF63;
-    flex: 1;
+    flex: 15;
   }
 
   .el-main {
+    padding: 0;
     background-color: #66b1ff;
-    flex: 4;
+    flex: 85;
   }
 </style>
