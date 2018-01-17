@@ -30,7 +30,7 @@
     created() {
       ipcRenderer.send('carousel');
       ipcRenderer.on('replay_carousel', (evt, data) => {
-        console.log(data);
+        // console.log(data);
         if (data instanceof Array) {
           this.images = data;
         }
