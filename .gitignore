@@ -62,7 +62,4 @@ build/electron-builder.yaml
 build/latest-linux.yml
 build/linux-unpacked/
 build/video-manager-0.0.0-x86_64.AppImage
-dist/electron/fonts/
-dist/electron/index.html
-dist/electron/renderer.js
-dist/electron/styles.css
+dist/
