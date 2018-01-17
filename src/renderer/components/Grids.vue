@@ -21,6 +21,8 @@
     'background-size: cover;' +
     'text-align: center;';
 
+  let currentPage = 0;
+
   function createStyle(color, columnStart, columnEnd, rowStart, rowEnd, image) {
     return style.replace('@color@', color)
       .replace('@column-start@', columnStart)
@@ -57,19 +59,24 @@
         console.log(otherData);
         this.msg = otherData;
       });
+      currentPage = 1;
       ipcRenderer.send('videos', 0, 11);
       let images = [];
       ipcRenderer.on('replayVideos', (evt, items) => {
-        console.log(items);
         images = items;
+        const newItems = [];
         for (let i = 0; i < 12; i += 1) {
           const array = getColRow(i, 4);
-          this.items.push(createStyle('#404', array[0], array[1], array[2], array[3], images[i]));
+          newItems.push(createStyle('#404', array[0], array[1], array[2], array[3], images[i]));
         }
+        this.items = newItems;
       });
 
       EventBus.$on('event_page_changed', (page) => {
-        console.log('event_page_changed ', page);
+        if (page !== currentPage) {
+          ipcRenderer.send('videos', (page - 1) * 12, ((page - 1) * 12) + 11);
+          currentPage = page;
+        }
       });
     },
   };
