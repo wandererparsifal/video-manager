@@ -73,7 +73,7 @@
 <style>
   .wrapper {
     display: grid;
-    padding: 1vw;
+    padding: 4vh 1vw;
     grid-template-columns: 20vw 1vw 20vw 1vw 20vw 1vw 20vw;
     grid-template-rows: 20vh 1vh 20vh 1vh 20vh;
   }

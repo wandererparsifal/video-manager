@@ -11,7 +11,7 @@
                 background-color="#fa9631"
                 text-color="#3d3d3d"
                 active-text-color="#ffffff"
-                @select="menu_select">
+                @select="menuSelected">
           <el-menu-item-group>
             <el-menu-item index="1">
               <i class="el-icon-location"></i>
@@ -29,7 +29,15 @@
         </el-menu>
       </el-aside>
       <el-main>
-        <grids/>
+        <grids class="grids"/>
+        <el-pagination
+                class="pagination"
+                v-on:current-change="pageChanged"
+                :current-page.sync="currentPage"
+                layout="prev, pager, next, jumper"
+                :page-size="1"
+                :total="50">
+        </el-pagination>
       </el-main>
     </el-container>
   </el-container>
@@ -43,11 +51,16 @@
     name: 'main-page',
     components: { Carousel, Grids },
     data() {
-      return {};
+      return {
+        currentPage: 0,
+      };
     },
     methods: {
-      menu_select(index) {
+      menuSelected(index) {
         console.log(index);
+      },
+      pageChanged() {
+        console.log('event_page_changed ', this.currentPage);
       },
     },
     created() {
@@ -84,5 +97,15 @@
     padding: 0;
     background-color: #66b1ff;
     flex: 85;
+  }
+
+  .grids {
+    height: 70vh;
+    background-color: #b3e19d;
+  }
+
+  .pagination {
+    text-align: center;
+    margin-top: 3vh;
   }
 </style>
