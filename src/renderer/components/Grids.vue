@@ -10,6 +10,7 @@
 
 <script>
   import { ipcRenderer } from 'electron'; // eslint-disable-line
+  import EventBus from '../eventBus';
 
   const style = 'background-color: @color@;' +
     'grid-column-start: @column-start@;' +
@@ -65,6 +66,10 @@
           const array = getColRow(i, 4);
           this.items.push(createStyle('#404', array[0], array[1], array[2], array[3], images[i]));
         }
+      });
+
+      EventBus.$on('event_page_changed', (page) => {
+        console.log('event_page_changed ', page);
       });
     },
   };

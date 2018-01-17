@@ -46,6 +46,7 @@
 <script>
   import Carousel from './Carousel';
   import Grids from './Grids';
+  import EventBus from '../eventBus';
 
   export default {
     name: 'main-page',
@@ -60,7 +61,7 @@
         console.log(index);
       },
       pageChanged() {
-        console.log('event_page_changed ', this.currentPage);
+        EventBus.$emit('event_page_changed', this.currentPage);
       },
     },
     created() {
