@@ -1,4 +1,5 @@
 const ipcMain = require('electron').ipcMain; // eslint-disable-line
+const images = require('./routes/images');
 // 不能混合使用import 和module.exports
 
 const Service = {
@@ -33,6 +34,7 @@ const Service = {
       }
       event.sender.send('replayVideos', items);
     });
+    images.listen(ipcMain);
   },
 };
 

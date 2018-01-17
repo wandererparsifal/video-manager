@@ -60,9 +60,9 @@
         this.msg = otherData;
       });
       currentPage = 1;
-      ipcRenderer.send('videos', 0, 11);
+      ipcRenderer.send('covers', 0, 11);
       let images = [];
-      ipcRenderer.on('replayVideos', (evt, items) => {
+      ipcRenderer.on('replayCovers', (evt, items) => {
         images = items;
         const newItems = [];
         for (let i = 0; i < 12; i += 1) {
@@ -74,7 +74,7 @@
 
       EventBus.$on('event_page_changed', (page) => {
         if (page !== currentPage) {
-          ipcRenderer.send('videos', (page - 1) * 12, ((page - 1) * 12) + 11);
+          ipcRenderer.send('covers', (page - 1) * 12, ((page - 1) * 12) + 11);
           currentPage = page;
         }
       });
