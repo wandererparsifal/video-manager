@@ -2,7 +2,6 @@
   <div>
     <div class="wrapper">
       <div v-for="item in items" :key="item" :style="item">
-        <img src="../assets/logo.png" class="image">
       </div>
     </div>
   </div>

@@ -53,7 +53,7 @@
     components: { Carousel, Grids },
     data() {
       return {
-        currentPage: 0,
+        currentPage: 1,
       };
     },
     methods: {
