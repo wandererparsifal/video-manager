@@ -12,8 +12,10 @@ const images = {
         fs.stat(p, (err, stats) => {
           if (err) throw err;
           if (stats.isFile()) {
-            if (fileName.endsWith('jpg')) {
+            console.log(path.extname(p));
+            if (path.extname(p) === '.jpg') {
               imageMap.push(p);
+              console.log(p);
             }
           } else if (stats.isDirectory()) {
             this.getLocalImages(p);
