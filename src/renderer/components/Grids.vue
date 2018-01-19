@@ -3,7 +3,7 @@
     <div class="wrapper">
       <div v-for="item in items" :key="item" :style="item">
         <el-tooltip class="item" effect="dark" :content="item" placement="top-end">
-          <div class="item_frame"></div>
+          <div class="item_frame" @click="click(item)"></div>
         </el-tooltip>
       </div>
     </div>
@@ -52,8 +52,8 @@
       };
     },
     methods: {
-      click() {
-        ipcRenderer.send('somemsg', 'data');
+      click(item) {
+        EventBus.$emit('item_click', item);
       },
     },
     created() {

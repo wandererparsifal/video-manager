@@ -29,7 +29,7 @@
         </el-menu>
       </el-aside>
       <el-main>
-        <grids class="grids"/>
+        <component :is="currentView"/>
         <el-pagination
                 class="pagination"
                 v-on:current-change="pageChanged"
@@ -46,14 +46,16 @@
 <script>
   import Carousel from './Carousel';
   import Grids from './Grids';
+  import Detail from './Detail';
   import EventBus from '../eventBus';
 
   export default {
     name: 'main-page',
-    components: { Carousel, Grids },
+    components: { Carousel, Grids, Detail },
     data() {
       return {
         currentPage: 1,
+        currentView: Grids,
       };
     },
     methods: {
@@ -65,6 +67,13 @@
       },
     },
     created() {
+      EventBus.$on('item_click', (data) => {
+        console.log(data);
+        this.currentView = Detail;
+      });
+      EventBus.$on('detail_back', () => {
+        this.currentView = Grids;
+      });
     },
   };
 </script>
