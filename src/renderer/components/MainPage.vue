@@ -5,28 +5,30 @@
     </div>
     <el-container id="container_body">
       <el-aside>
-        <el-menu
-                default-active="1"
-                class="el-menu-vertical-demo"
-                background-color="#fa9631"
-                text-color="#3d3d3d"
-                active-text-color="#ffffff"
-                @select="menuSelected">
-          <el-menu-item-group>
-            <el-menu-item index="1">
-              <i class="el-icon-location"></i>
-              <span slot="title"><b>导航一</b></span>
-            </el-menu-item>
-            <el-menu-item index="2">
-              <i class="el-icon-menu"></i>
-              <span slot="title"><b>导航二</b></span>
-            </el-menu-item>
-            <el-menu-item index="3">
-              <i class="el-icon-setting"></i>
-              <span slot="title"><b>导航三</b></span>
-            </el-menu-item>
-          </el-menu-item-group>
-        </el-menu>
+        <div class="menu_layout">
+          <el-menu
+                  default-active="1"
+                  class="el-menu-vertical-demo"
+                  background-color="#EFF3F5"
+                  text-color="#708090"
+                  active-text-color="#00BFFF"
+                  @select="menuSelected">
+            <el-menu-item-group>
+              <el-menu-item index="1">
+                <i class="el-icon-location"></i>
+                <span slot="title"><b>导航一</b></span>
+              </el-menu-item>
+              <el-menu-item index="2">
+                <i class="el-icon-menu"></i>
+                <span slot="title"><b>导航二</b></span>
+              </el-menu-item>
+              <el-menu-item index="3">
+                <i class="el-icon-setting"></i>
+                <span slot="title"><b>导航三</b></span>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-menu>
+        </div>
       </el-aside>
       <el-main>
         <component :is="currentView"/>
@@ -103,13 +105,13 @@
   }
 
   .el-aside {
-    background-color: #ACFF63;
+    background-color: #F9F9F9;
     flex: 15;
   }
 
   .el-main {
     padding: 0;
-    background-color: #66b1ff;
+    background-color: #F9F9F9;
     flex: 85;
   }
 
@@ -121,5 +123,12 @@
   .pagination {
     text-align: center;
     margin-top: 3vh;
+  }
+
+  .menu_layout {
+    width: 14vw;
+    height: 100%;
+    background-color: #EFF3F5;
+    box-shadow: 0.1vw 0 1vw #999999;
   }
 </style>
