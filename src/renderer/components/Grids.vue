@@ -2,6 +2,9 @@
   <div>
     <div class="wrapper">
       <div v-for="item in items" :key="item" :style="item">
+        <el-tooltip class="item" effect="dark" :content="item" placement="top-end">
+          <div class="item_frame"></div>
+        </el-tooltip>
       </div>
     </div>
   </div>
@@ -49,6 +52,9 @@
       };
     },
     methods: {
+      click() {
+        ipcRenderer.send('somemsg', 'data');
+      },
     },
     created() {
       ipcRenderer.on('replaymsg', (evt, otherData) => {
@@ -87,6 +93,11 @@
   }
 
   .image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .item_frame {
     width: 100%;
     height: 100%;
   }
