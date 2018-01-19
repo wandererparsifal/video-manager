@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="wrapper">
-      <div v-for="item in items" :key="item" :style="item">
-        <el-tooltip class="item" effect="dark" :content="item" placement="top-end">
-          <div class="item_frame" @click="click(item)"></div>
+      <div v-for="item in items" :key="item.id" :style="item.style">
+        <el-tooltip class="item" effect="dark" :content="item.style" placement="top-end">
+          <img :src="item.img" class="item_frame" @click="click(item.style)"/>
         </el-tooltip>
       </div>
     </div>
@@ -14,24 +14,22 @@
   import { ipcRenderer } from 'electron'; // eslint-disable-line
   import EventBus from '../eventBus';
 
-  const style = 'background-color: @color@;' +
+  const styleTemplate = 'background-color: @color@;' +
     'grid-column-start: @column-start@;' +
     'grid-column-end: @column-end@;' +
     'grid-row-start: @row-start@;' +
     'grid-row-end: @row-end@;' +
-    'background-image: url(@image@);' +
     'background-size: cover;' +
     'text-align: center;';
 
   let currentPage = 0;
 
-  function createStyle(color, columnStart, columnEnd, rowStart, rowEnd, image) {
-    return style.replace('@color@', color)
+  function createStyle(color, columnStart, columnEnd, rowStart, rowEnd) {
+    return styleTemplate.replace('@color@', color)
       .replace('@column-start@', columnStart)
       .replace('@column-end@', columnEnd)
       .replace('@row-start@', rowStart)
-      .replace('@row-end@', rowEnd)
-      .replace('@image@', image);
+      .replace('@row-end@', rowEnd);
   }
 
   function getColRow(index, colNum) {
@@ -69,7 +67,11 @@
         const newItems = [];
         for (let i = 0; i < 12; i += 1) {
           const array = getColRow(i, 4);
-          newItems.push(createStyle('#404', array[0], array[1], array[2], array[3], images[i]));
+          newItems.push({
+            id: i,
+            style: createStyle('#404', array[0], array[1], array[2], array[3]),
+            img: images[i],
+          });
         }
         this.items = newItems;
       });
