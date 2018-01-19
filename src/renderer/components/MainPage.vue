@@ -36,7 +36,8 @@
                 :current-page.sync="currentPage"
                 layout="prev, pager, next, jumper"
                 :page-size="1"
-                :total="50">
+                :total="50"
+                v-show="showPagination">
         </el-pagination>
       </el-main>
     </el-container>
@@ -56,6 +57,7 @@
       return {
         currentPage: 1,
         currentView: Grids,
+        showPagination: true,
       };
     },
     methods: {
@@ -70,9 +72,11 @@
       EventBus.$on('item_click', (data) => {
         console.log(data);
         this.currentView = Detail;
+        this.showPagination = false;
       });
       EventBus.$on('detail_back', () => {
         this.currentView = Grids;
+        this.showPagination = true;
       });
     },
   };

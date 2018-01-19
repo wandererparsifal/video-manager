@@ -20,7 +20,7 @@
 <style>
   .detail {
     width: 100%;
-    height: 70vh;
+    height: 100%;
     background-color: #45f4f9;
   }
 </style>
