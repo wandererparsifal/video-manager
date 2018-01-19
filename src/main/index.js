@@ -1,7 +1,6 @@
 import { app, BrowserWindow } from 'electron'; // eslint-disable-line
-const Service = require('../server/server'); // eslint-disable-line
-
-Service.start();
+const ipcMain = require('electron').ipcMain; // eslint-disable-line
+const images = require('./routes/images');
 
 /**
  * Set `__static` path to static files in production
@@ -17,6 +16,7 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`;
 
 function createWindow() {
+  images.listen(ipcMain);
   /**
    * Initial window options
    */

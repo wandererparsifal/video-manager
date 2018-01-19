@@ -49,9 +49,6 @@
       };
     },
     methods: {
-      click() {
-        ipcRenderer.send('somemsg', 'data');
-      },
     },
     created() {
       ipcRenderer.on('replaymsg', (evt, otherData) => {
